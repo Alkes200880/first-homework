@@ -113,13 +113,21 @@ class Welcome extends CI_Controller {
             $this->input->post("Pass"),
             $this->input->post("mail"));
         if ($data["state"]){
-         try{
-             $this->welcome_model->addDBUser($this->input->post("Login"),
+
+             $ret=$this->welcome_model->addDBUser(
+                 $this->input->post("Login"),
                  $this->input->post("Pass"),
                  $this->input->post("mail"));
+            if($ret["code"]==0){
+                echo "Пользователь добавлен" ;
+                header("refresh: 2; url=/");
+            }else{
+                echo "Ошибка добавления";
+                var_dump($ret);
+                header("refresh: 15; url=/welcome/registration");
+            }
 
-             echo "Пользователь добавлен";
-         } catch (Exception $e) { echo "Пользователь недобавлен".$e;};
+
         } else echo "Данные некорректны";
 
 
@@ -127,13 +135,25 @@ class Welcome extends CI_Controller {
 
     public function verifyData($l,$p,$m)
     {
-        return [
+        $ret=[
             'Login' => $l,
             'Pass' => $p,
             'mail' => $m,
             'state' => TRUE
 
         ];
+        if (!preg_match("/^[a-zA-Z0-9_-]+$/",$l)){
+            $ret['state'] = false;
+            $ret['message'] = "Недопустимое имя";
+        }
+        if (!preg_match("/^[a-zA-Z0-9_-]+$/",$p)){
+            $ret['state'] = false;
+            $ret['message'] = "Недопустимый пароль";
+        }
+
+
+
+        return $ret;
     }
 
     public function createDB()

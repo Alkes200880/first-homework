@@ -54,7 +54,7 @@ class Welcome_model extends CI_Model{
             'approved' => TRUE
 
         ]);
-        return true;
+        return $this->db->error();
     }
 
     public function createDBLogin()
