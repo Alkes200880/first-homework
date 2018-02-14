@@ -1,6 +1,8 @@
 <div id="container">
     <h1Список Дел</h1>
-
+    <form method="post" action="/welcome/logOut">
+        <button type="submit">Выйти</button>
+    </form>
     <div id="body">
 
         <form >

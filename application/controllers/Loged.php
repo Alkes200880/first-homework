@@ -11,7 +11,7 @@ class Loged extends CI_Controller{
     public $name;
     public function __construct()
     {parent::__construct();
-        $this->load->database();
+        //$this->load->database();
         $this->name=$this->checkCookie();
         $this->load->model("loged_model");
 

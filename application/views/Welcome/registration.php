@@ -7,8 +7,10 @@
             Логин  :<input name="Login" type="text">
             Пароль :<input name="Pass" type="text">
             Почта  :<input name="mail" type="text">
-
             <button type="submit">Регистрация</button>
+        </form>
+        <form method="post" action="/welcome/createDB">
+            <button type="submit">Создать базы данных</button>
         </form>
         </pre>
 

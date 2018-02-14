@@ -1,7 +1,4 @@
 
-function reloadPage() {
-    $("#return").text("перегрузим страницу");
-}
 
 function up(data,prev,e) {
     //console.log(data);

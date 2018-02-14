@@ -3,21 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
+
     public function __construct()
     {
         parent::__construct();
@@ -26,16 +12,15 @@ class Welcome extends CI_Controller {
     }
 
     public $base = "http://homework1.my/";
-	private $jquery = "<script src=\""."/js/jquery-3.3.1.min.js"."\" defer></script>";
-//{$this->base}
-    private function script($name="/js/main.js")
+	private $jquery = "<script src=\"/js/jquery-3.3.1.min.js\" defer></script>";
+
+    private function script($name="/js/main.js")//Создает строку для запуска скриптов на странице
     {
-        return $this->jquery."<script src=\"
-{$name}\" defer></script>";
+        return $this->jquery."<script src=\" {$name}\" defer></script>";
     }
 
 
-	public function index()
+	public function index()//Стартовая страница
 	{
 	    if ($this->autorized()){
             header("Location: /Loged");
@@ -50,11 +35,10 @@ class Welcome extends CI_Controller {
 
     public function autorized()
     {
-
         if ($this->checkCookie()) return true;
         return false;
     }
-    public function registration()
+    public function registration()//страница регистрации
     {
         $data["title"] = "Форма регистрации";
        // $data["script"] = $this->script("js/enter.js");
@@ -152,6 +136,22 @@ class Welcome extends CI_Controller {
         ];
     }
 
+    public function createDB()
+    {
+        $this->welcome_model->createDBLogin();
+        $this->load->model("loged_model");
+        $this->loged_model->createDBList();
+        echo "Базы созданы";
+        header("refresh: 2; url=/welcome/registration");
+    }
+
+    public function logOut()
+    {
+        //deletecookie;
+        setcookie("token","",strtotime("-2 H"),"/");
+        echo "куки удален";
+        header("refresh: 1; url=/");
+    }
 
 
 
